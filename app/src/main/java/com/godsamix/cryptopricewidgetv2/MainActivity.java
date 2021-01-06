@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -21,11 +22,17 @@ public class MainActivity extends AppCompatActivity {
     public static SimpleRVAdapter adap;
     public static LinearLayout la;
     public static TextView footer;
+    public  static SharedPreferences sharedPreferences;
+    public static String coinsJsonList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //shared prefs init and get value
+        sharedPreferences = this.getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        coinsJsonList = sharedPreferences.getString("coins", "");
 
         la = findViewById(R.id.linearlay);
         recyclerView = findViewById(R.id.recyclerview);
@@ -46,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         la.setOnClickListener(v -> {
 
         });
+
         UpdateView();
     }
 
