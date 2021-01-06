@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Crypto Price Widget</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add crypto price widget</string>
+</resources>
