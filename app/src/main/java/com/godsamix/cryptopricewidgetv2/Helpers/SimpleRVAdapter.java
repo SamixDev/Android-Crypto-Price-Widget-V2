@@ -29,7 +29,7 @@ public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHo
         public TextView textView;
         public TextView textView2;
         public ImageView imgview;
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView ) {
             super(itemView);
             textView = itemView.findViewById(R.id.code);
             textView2 = itemView.findViewById(R.id.name);
@@ -41,7 +41,7 @@ public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.textView.setText(dataSource[position]);
         holder.textView2.setText(nameSource[position]);
-        holder.imgview.setImageResource(R.drawable.additem);;
+        holder.imgview.setImageResource(R.drawable.additem);
     }
 
     @Override
