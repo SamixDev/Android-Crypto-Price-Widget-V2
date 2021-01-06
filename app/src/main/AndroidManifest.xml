@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CryptoPriceWidgetV2">
-        <activity android:name=".coinsListView"></activity>
+        <activity android:name=".coinsListView"
+            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
 
         <receiver android:name=".CryptoPrice">
             <intent-filter>
@@ -21,7 +22,8 @@
                 android:resource="@xml/crypto_price_info" />
         </receiver>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

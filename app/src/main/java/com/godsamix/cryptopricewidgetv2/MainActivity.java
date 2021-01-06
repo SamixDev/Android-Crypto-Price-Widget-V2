@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
         footer.setMovementMethod(LinkMovementMethod.getInstance());
 
         la.setOnClickListener(v -> {
-
+            Intent i = new Intent(getApplicationContext(),coinsListView.class);
+            startActivity(i);
         });
 
         UpdateView();
