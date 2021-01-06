@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListAdapter;
 import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListController;
@@ -24,12 +26,14 @@ public class coinsListView extends AppCompatActivity {
     private final List<CoinsListController> viewlist = new ArrayList<CoinsListController>();
     private CoinsListAdapter hardAdapter;
     private RecyclerView recyclerView;
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coins_list_view);
-
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.VISIBLE);
         hardAdapter = new CoinsListAdapter(this, viewlist);
         recyclerView = findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -50,6 +54,7 @@ public class coinsListView extends AppCompatActivity {
 //                    Log.e("tst ",response.body().toString());
                     for(CoinsListController procc: response.body()){
                         viewlist.add(procc);
+                        spinner.setVisibility(View.GONE);
                     //    Log.e("tst ",procc.getName());
                     }
                     hardAdapter.notifyDataSetChanged();
