@@ -37,9 +37,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerview">
@@ -48,12 +50,14 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/additem"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            app:tint="@color/orange"/>
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Coin"
+            android:textColor="@color/orange"
             android:layout_gravity="center"
 />
 
