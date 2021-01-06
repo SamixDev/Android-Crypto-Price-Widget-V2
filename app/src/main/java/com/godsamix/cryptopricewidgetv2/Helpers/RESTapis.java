@@ -1,5 +1,9 @@
 package com.godsamix.cryptopricewidgetv2.Helpers;
 
+import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListController;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -9,7 +13,7 @@ import retrofit2.http.Query;
 public interface RESTapis {
     // Get Coins List
     @GET("coins/list")
-    Call<Object> getCoinsList();
+    Call<List<CoinsListController>> getCoinsList();
 
     // Get Coins price
     // ids is id of coins, comma-separated if querying more than 1 coin

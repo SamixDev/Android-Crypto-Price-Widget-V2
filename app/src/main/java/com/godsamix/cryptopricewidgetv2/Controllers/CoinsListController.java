@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class CoinsListController {
     @SerializedName("id")
     private  String id;
-    @SerializedName("Name")
+    @SerializedName("name")
     private  String name;
     @SerializedName("symbol")
     private  String symbol;
