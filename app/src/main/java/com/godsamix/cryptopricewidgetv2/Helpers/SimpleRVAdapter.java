@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.godsamix.cryptopricewidgetv2.R;
@@ -18,6 +19,7 @@ public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHo
         nameSource = nameArgs;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -29,11 +31,13 @@ public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHo
         public TextView textView;
         public TextView textView2;
         public ImageView imgview;
+
         public ViewHolder(View itemView ) {
             super(itemView);
             textView = itemView.findViewById(R.id.code);
             textView2 = itemView.findViewById(R.id.name);
             imgview = itemView.findViewById(R.id.img);
+
         }
     }
 

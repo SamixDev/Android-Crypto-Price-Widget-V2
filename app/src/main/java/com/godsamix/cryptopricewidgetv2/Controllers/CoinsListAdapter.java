@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.godsamix.cryptopricewidgetv2.R;
@@ -31,17 +32,15 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         holder.name.setText(lst.getName());
         holder.symbol.setText(lst.getSymbol());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.itemView.setOnClickListener(v -> {
 //                Bundle bundle = new Bundle();
 //                bundle.putString("HardwareCode", holder.code.getText().toString());
 //                bundle.putString("HardwareType", hardwareItemsListFragment.args);
 //                Navigation.findNavController(v).navigate(R.id.action_nav_hardware_to_nav_hardware_specs,bundle);
-            }
         });
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.coins_list, parent, false);
@@ -57,11 +56,14 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         private final TextView id;
         private final TextView name;
         private final TextView symbol;
+        private final ImageView addcoin;
         public ViewHolder(View itemView) {
             super(itemView);
             id = itemView.findViewById(R.id.id);
             name = itemView.findViewById(R.id.name);
             symbol = itemView.findViewById(R.id.code);
+            addcoin = itemView.findViewById(R.id.addcoin);
+            addcoin.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.godsamix.cryptopricewidgetv2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListAdapter;
@@ -23,22 +25,24 @@ import retrofit2.Response;
 
 public class coinsListView extends AppCompatActivity {
 
-    private final List<CoinsListController> viewlist = new ArrayList<CoinsListController>();
+    private final List<CoinsListController> viewlist = new ArrayList<>();
     private CoinsListAdapter hardAdapter;
     private RecyclerView recyclerView;
     private ProgressBar spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coins_list_view);
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = findViewById(R.id.progressBar1);
         spinner.setVisibility(View.VISIBLE);
         hardAdapter = new CoinsListAdapter(this, viewlist);
         recyclerView = findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(hardAdapter);
+
         getCoinsList();
 
     }
@@ -48,7 +52,7 @@ public class coinsListView extends AppCompatActivity {
         call = RESTapis.getCoinsList();
         call.enqueue(new Callback<List<CoinsListController>>() {
             @Override
-            public void onResponse(Call<List<CoinsListController>> call, Response<List<CoinsListController>> response) {
+            public void onResponse(@NonNull Call<List<CoinsListController>> call, @NonNull Response<List<CoinsListController>> response) {
                 if(response.isSuccessful()) {
                     Log.e("test ","test ");
 //                    Log.e("tst ",response.body().toString());
@@ -63,7 +67,7 @@ public class coinsListView extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<List<CoinsListController>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<CoinsListController>> call, @NonNull Throwable t) {
                 //   Log.e(TAG, t.getMessage());
                 Log.e("failed ", t.getMessage());
             }
