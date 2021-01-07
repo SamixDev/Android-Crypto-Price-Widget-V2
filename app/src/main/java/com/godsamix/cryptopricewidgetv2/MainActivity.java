@@ -48,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
         //shared prefs init and get value
         sharedPreferences = this.getSharedPreferences("MySharedPref", MODE_PRIVATE);
         coinsJsonList = sharedPreferences.getString("coins", "");
+        if (coinsJsonList.isEmpty()){
+            String btcprefs = "[{\"id\":\"bitcoin\",\"symbol\":\"btc\",\"name\":\"Bitcoin\"}]";
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putString("coins",btcprefs);
+            myEdit.commit();
+        }else{
+
+        }
         Log.e("shared pref coins" , coinsJsonList);
 
         la = findViewById(R.id.linearlay);

@@ -50,27 +50,31 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
             Gson gson = new Gson();
             CoinsListController coinprefs =  new CoinsListController(lst.getID(),lst.getName(),lst.getSymbol());
             String objString = gson.toJson(coinprefs);
-            Log.e("js" , objString);
-//            if (coinsJsonList.isEmpty()){
-//                Log.e("empty" , "empty " + jj);
-//            }else{
-//                jj = gson.fromJson(coinsJsonList, new TypeToken<List<JsonObject>>(){}.getType());
-//            }
+      //      Log.e("js" , objString);
+            if (coinsJsonList.isEmpty()){
+         //       Log.e("empty" , "empty " + coinsJsonList);
+            }else{
+                Log.e("not empty" , coinsJsonList);
+                jj = gson.fromJson(coinsJsonList, new TypeToken<List<JsonObject>>(){}.getType());
+         //       Log.e("new arr" , jj.toString());
+            }
 
            // Log.e("list" , jj.toString());
-//            try {
-//                JSONObject jsonObject = new JSONObject(objString);
-//                Log.e("js obj" , jsonObject.toString());
-//         //       jj.add(jsonObject);
-////                Log.e("js" , jj.toString());
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            sharedPreferences = context.getSharedPreferences("MySharedPref", MODE_PRIVATE);
-//            coinsJsonList = sharedPreferences.getString("coins", "");
-//            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-//            myEdit.putString("coins",coinsJsonList + objString);
-//            myEdit.commit();
+            try {
+                JSONObject jsonObject = new JSONObject(objString);
+           //     Log.e("js obj" , jsonObject.toString());
+                jj.add(jsonObject);
+             //   Log.e("js" , jj.toString());
+
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.putString("coins",jj.toString());
+                myEdit.commit();
+                   Log.e("shared" , sharedPreferences.getString("coins", ""));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
         });
     }
 
