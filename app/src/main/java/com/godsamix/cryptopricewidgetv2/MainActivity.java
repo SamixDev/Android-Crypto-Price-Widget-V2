@@ -23,6 +23,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,11 +61,16 @@ public class MainActivity extends AppCompatActivity {
         coinsarray = "[{\"id\":\"01coin\",\"symbol\":\"zoc\",\"name\":\"01coin\"}," +
                 "{\"id\":\"aelf\",\"symbol\":\"elf\",\"name\":\"elf\"}]";
         Gson gson = new Gson();
-      //  CoinsListController con = gson.fromJson(coinsarray, CoinsListController.class);
-       List<CoinsListController> jj = gson.fromJson(coinsarray, new TypeToken<List<JsonObject>>(){}.getType());
+       List<JSONObject> jj = gson.fromJson(coinsarray, new TypeToken<List<JsonObject>>(){}.getType());
+       CoinsListController ll =  new CoinsListController("aelysir","Aelysir","ael");
+       String lolo = gson.toJson(ll);
+        try {
+            JSONObject jsonObject = new JSONObject(lolo);
+            jj.add(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Log.e("tst" , jj.toString());
-
-
 
         //footer
         footer.setText(

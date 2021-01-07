@@ -3,6 +3,7 @@ package com.godsamix.cryptopricewidgetv2.Controllers;
 import com.google.gson.annotations.SerializedName;
 
 public class CoinsListController {
+
     @SerializedName("id")
     private  String id;
     @SerializedName("name")
@@ -31,5 +32,15 @@ public class CoinsListController {
     public String getSymbol() {
         return symbol;
     }
+
+//    @Override
+//    public String toString() {
+//        return "CoinsListController{" +
+//                "id='" + id + '\'' +
+//                ", name='" + name + '\'' +
+//                ", symbol='" + symbol + '\'' +
+//                '}';
+//    }
+
 }
 
