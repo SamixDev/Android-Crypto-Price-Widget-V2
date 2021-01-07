@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -29,7 +31,7 @@ public class coinsListView extends AppCompatActivity {
     private CoinsListAdapter hardAdapter;
     private RecyclerView recyclerView;
     private ProgressBar spinner;
-
+    private Button addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class coinsListView extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(hardAdapter);
 
+
         getCoinsList();
 
     }
@@ -54,7 +57,7 @@ public class coinsListView extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<List<CoinsListController>> call, @NonNull Response<List<CoinsListController>> response) {
                 if(response.isSuccessful()) {
-                    Log.e("test ","test ");
+ //                   Log.e("test ","test ");
 //                    Log.e("tst ",response.body().toString());
                     for(CoinsListController procc: response.body()){
                         viewlist.add(procc);

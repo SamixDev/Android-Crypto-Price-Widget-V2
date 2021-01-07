@@ -1,7 +1,9 @@
 package com.godsamix.cryptopricewidgetv2.Controllers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +14,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.godsamix.cryptopricewidgetv2.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.ViewHolder> {
     private final List<CoinsListController> hard;
     private final Context context;
-
-
+    public  static SharedPreferences sharedPreferences;
+    public static String coinsJsonList;
+    List<JSONObject> jj;
     public CoinsListAdapter(Context context, List<CoinsListController> hardware){
         this.hard = hardware;
         this.context = context;
@@ -32,11 +43,34 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         holder.name.setText(lst.getName());
         holder.symbol.setText(lst.getSymbol());
 
-        holder.itemView.setOnClickListener(v -> {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("HardwareCode", holder.code.getText().toString());
-//                bundle.putString("HardwareType", hardwareItemsListFragment.args);
-//                Navigation.findNavController(v).navigate(R.id.action_nav_hardware_to_nav_hardware_specs,bundle);
+        holder.addcoin.setOnClickListener(v -> {
+            Log.e("btn" , "btn works "+ lst.getID() );
+            sharedPreferences = context.getSharedPreferences("MySharedPref", MODE_PRIVATE);
+            coinsJsonList = sharedPreferences.getString("coins", "");
+            Gson gson = new Gson();
+            CoinsListController coinprefs =  new CoinsListController(lst.getID(),lst.getName(),lst.getSymbol());
+            String objString = gson.toJson(coinprefs);
+            Log.e("js" , objString);
+//            if (coinsJsonList.isEmpty()){
+//                Log.e("empty" , "empty " + jj);
+//            }else{
+//                jj = gson.fromJson(coinsJsonList, new TypeToken<List<JsonObject>>(){}.getType());
+//            }
+
+           // Log.e("list" , jj.toString());
+//            try {
+//                JSONObject jsonObject = new JSONObject(objString);
+//                Log.e("js obj" , jsonObject.toString());
+//         //       jj.add(jsonObject);
+////                Log.e("js" , jj.toString());
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            sharedPreferences = context.getSharedPreferences("MySharedPref", MODE_PRIVATE);
+//            coinsJsonList = sharedPreferences.getString("coins", "");
+//            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+//            myEdit.putString("coins",coinsJsonList + objString);
+//            myEdit.commit();
         });
     }
 

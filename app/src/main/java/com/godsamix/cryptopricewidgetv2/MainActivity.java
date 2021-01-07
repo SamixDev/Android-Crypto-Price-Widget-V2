@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         //shared prefs init and get value
         sharedPreferences = this.getSharedPreferences("MySharedPref", MODE_PRIVATE);
         coinsJsonList = sharedPreferences.getString("coins", "");
+        Log.e("shared pref coins" , coinsJsonList);
 
         la = findViewById(R.id.linearlay);
         recyclerView = findViewById(R.id.recyclerview);
@@ -62,15 +63,15 @@ public class MainActivity extends AppCompatActivity {
                 "{\"id\":\"aelf\",\"symbol\":\"elf\",\"name\":\"elf\"}]";
         Gson gson = new Gson();
        List<JSONObject> jj = gson.fromJson(coinsarray, new TypeToken<List<JsonObject>>(){}.getType());
-       CoinsListController ll =  new CoinsListController("aelysir","Aelysir","ael");
-       String lolo = gson.toJson(ll);
+       CoinsListController coinprefs =  new CoinsListController("aelysir","Aelysir","ael");
+       String objString = gson.toJson(coinprefs);
         try {
-            JSONObject jsonObject = new JSONObject(lolo);
+            JSONObject jsonObject = new JSONObject(objString);
             jj.add(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.e("tst" , jj.toString());
+      //  Log.e("tst" , jj.toString());
 
         //footer
         footer.setText(
