@@ -35,6 +35,7 @@ public class coinsListView extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProgressBar spinner;
     private ImageView searchBtn;
+    private ImageView backBtn;
     private TextInputEditText searchTxt;
 
     @Override
@@ -45,6 +46,12 @@ public class coinsListView extends AppCompatActivity {
         spinner.setVisibility(View.VISIBLE);
         hardAdapter = new CoinsListAdapter(this, viewlist);
         recyclerView = findViewById(R.id.recyclerview);
+
+        backBtn = findViewById(R.id.back);
+        backBtn.setOnClickListener(v -> {
+            finish();
+        });
+
         searchBtn = findViewById(R.id.searchbutton);
         searchTxt = findViewById(R.id.searchinput);
         searchBtn.setOnClickListener(v -> {
