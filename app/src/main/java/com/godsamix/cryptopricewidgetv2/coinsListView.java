@@ -13,11 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListAdapter;
 import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListController;
 import com.godsamix.cryptopricewidgetv2.Helpers.RESTapis;
 import com.godsamix.cryptopricewidgetv2.Helpers.RetrofitService;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class coinsListView extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProgressBar spinner;
     private ImageView searchBtn;
-    private TextView searchTxt;
+    private TextInputEditText searchTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,14 @@ public class coinsListView extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         searchBtn = findViewById(R.id.searchbutton);
         searchTxt = findViewById(R.id.searchinput);
-
-        getCoinsList();
-       // hardAdapter.notifyDataSetChanged();
+        searchBtn.setOnClickListener(v -> {
+            spinner.setVisibility(View.VISIBLE);
+            viewlist.clear();
+            getCoinsList(searchTxt.getText().toString());
+        });
+        getCoinsList("");
     }
-    private void getCoinsList(){
+    private void getCoinsList(String search){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
         Call<List<CoinsListController>> call;
         call = RESTapis.getCoinsList();
@@ -58,12 +63,17 @@ public class coinsListView extends AppCompatActivity {
             public void onResponse(@NonNull Call<List<CoinsListController>> call, @NonNull Response<List<CoinsListController>> response) {
                 if(response.isSuccessful()) {
                     for(CoinsListController procc: response.body()){
-                        viewlist.add(procc);
-                        spinner.setVisibility(View.GONE);
+                        if (search.isEmpty()){
+                            viewlist.add(procc);
+                        }else{
+                            if(procc.getName().equals(search)){
+                                viewlist.add(procc);
+                            }
+                        }
                     }
-
                 }else{
                 }
+                spinner.setVisibility(View.GONE);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.setAdapter(hardAdapter);
