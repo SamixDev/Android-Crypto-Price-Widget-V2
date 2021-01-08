@@ -47,7 +47,7 @@ public class coinsListView extends AppCompatActivity {
 
 
         getCoinsList();
-
+       // hardAdapter.notifyDataSetChanged();
     }
     private void getCoinsList(){
         RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
@@ -57,8 +57,6 @@ public class coinsListView extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<List<CoinsListController>> call, @NonNull Response<List<CoinsListController>> response) {
                 if(response.isSuccessful()) {
- //                   Log.e("test ","test ");
-//                    Log.e("tst ",response.body().toString());
                     for(CoinsListController procc: response.body()){
                         viewlist.add(procc);
                         spinner.setVisibility(View.GONE);
@@ -66,7 +64,7 @@ public class coinsListView extends AppCompatActivity {
                     }
                     hardAdapter.notifyDataSetChanged();
                 }else{
-                     Log.e("failed ", "response.message()");
+                   //  Log.e("failed ", "response.message()");
                 }
             }
             @Override

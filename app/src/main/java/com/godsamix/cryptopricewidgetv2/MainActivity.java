@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public static String[] listName;
     public static String[] listSymbol;
     public static String[] listID;
+    public static JSONArray jsonarray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void UpdateView(){
-
         coinsJsonList = sharedPreferences.getString("coins", "");
         if (coinsJsonList.isEmpty()){
             String btcprefs = "[{\"id\":\"bitcoin\",\"symbol\":\"btc\",\"name\":\"Bitcoin\"}]";
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.e("shared pref coins" , coinsJsonList);
         try {
-            JSONArray jsonarray = new JSONArray(coinsJsonList);
+            jsonarray = new JSONArray(coinsJsonList);
             int arrLength = jsonarray.length();
             listName = new String[arrLength];
             listSymbol = new String[arrLength];
@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.e("coins2" , Arrays.toString(listName));
         adap = new SimpleRVAdapter(listID,listName,listSymbol);
         recyclerView.setAdapter(adap);
         if(adap.getItemCount() <= 8){
