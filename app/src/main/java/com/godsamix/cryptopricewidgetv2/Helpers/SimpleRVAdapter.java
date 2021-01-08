@@ -12,11 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.godsamix.cryptopricewidgetv2.R;
 
 public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHolder> {
-    private String[] dataSource;
-    private String[] nameSource;
-    public SimpleRVAdapter(String[] dataArgs, String[] nameArgs){
-        dataSource = dataArgs;
-        nameSource = nameArgs;
+    private String[] id;
+    private String[] name;
+    private String[] symbol;
+
+    public SimpleRVAdapter(String[] idArgs, String[] nameArgs, String[] symbolArgs){
+        id = idArgs;
+        name = nameArgs;
+        symbol = symbolArgs;
     }
 
     @NonNull
@@ -28,14 +31,16 @@ public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView textView;
-        public TextView textView2;
+        public TextView idtext;
+        public TextView codetext;
+        public TextView nametext;
         public ImageView imgview;
 
         public ViewHolder(View itemView ) {
             super(itemView);
-            textView = itemView.findViewById(R.id.code);
-            textView2 = itemView.findViewById(R.id.name);
+            idtext = itemView.findViewById(R.id.id);
+            codetext = itemView.findViewById(R.id.code);
+            nametext = itemView.findViewById(R.id.name);
             imgview = itemView.findViewById(R.id.img);
 
         }
@@ -43,13 +48,14 @@ public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.textView.setText(dataSource[position]);
-        holder.textView2.setText(nameSource[position]);
+        holder.idtext.setText(id[position]);
+        holder.codetext.setText(symbol[position]);
+        holder.nametext.setText(name[position]);
         holder.imgview.setImageResource(R.drawable.additem);
     }
 
     @Override
     public int getItemCount() {
-        return dataSource.length;
+        return id.length;
     }
 }

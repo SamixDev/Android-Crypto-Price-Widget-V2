@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.godsamix.cryptopricewidgetv2.MainActivity;
 import com.godsamix.cryptopricewidgetv2.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -70,6 +71,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
                 myEdit.putString("coins",jj.toString());
                 myEdit.commit();
                    Log.e("shared" , sharedPreferences.getString("coins", ""));
+                MainActivity.UpdateView();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
