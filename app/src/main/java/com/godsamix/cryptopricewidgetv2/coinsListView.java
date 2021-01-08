@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListAdapter;
 import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListController;
@@ -31,7 +32,8 @@ public class coinsListView extends AppCompatActivity {
     private CoinsListAdapter hardAdapter;
     private RecyclerView recyclerView;
     private ProgressBar spinner;
-    private Button addBtn;
+    private ImageView searchBtn;
+    private TextView searchTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +43,8 @@ public class coinsListView extends AppCompatActivity {
         spinner.setVisibility(View.VISIBLE);
         hardAdapter = new CoinsListAdapter(this, viewlist);
         recyclerView = findViewById(R.id.recyclerview);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(hardAdapter);
-
+        searchBtn = findViewById(R.id.searchbutton);
+        searchTxt = findViewById(R.id.searchinput);
 
         getCoinsList();
        // hardAdapter.notifyDataSetChanged();
@@ -60,12 +60,14 @@ public class coinsListView extends AppCompatActivity {
                     for(CoinsListController procc: response.body()){
                         viewlist.add(procc);
                         spinner.setVisibility(View.GONE);
-                    //    Log.e("tst ",procc.getName());
                     }
-                    hardAdapter.notifyDataSetChanged();
+
                 }else{
-                   //  Log.e("failed ", "response.message()");
                 }
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setAdapter(hardAdapter);
+                hardAdapter.notifyDataSetChanged();
             }
             @Override
             public void onFailure(@NonNull Call<List<CoinsListController>> call, @NonNull Throwable t) {

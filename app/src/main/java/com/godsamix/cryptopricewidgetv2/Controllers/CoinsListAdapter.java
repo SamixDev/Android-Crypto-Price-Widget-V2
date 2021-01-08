@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -37,6 +38,7 @@ import static com.godsamix.cryptopricewidgetv2.MainActivity.sharedPreferences;
 public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.ViewHolder> {
     private final List<CoinsListController> hard;
     private final Context context;
+
     //public  static SharedPreferences sharedPreferences;
     List<JSONObject> jj;
     public CoinsListAdapter(Context context, List<CoinsListController> hardware){
@@ -50,44 +52,54 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         holder.id.setText(lst.getID());
         holder.name.setText(lst.getName());
         holder.symbol.setText(lst.getSymbol());
+        holder.addOrDel = true; //true add, false delete
         for (String s : listID) {
             if (lst.getID().equals(s)) {
-                Log.e("id", s);
                 holder.addcoin.setImageResource(R.drawable.deleteitem);
                 holder.addcoin.setColorFilter(ContextCompat.getColor(context, R.color.red));
+                holder.addOrDel = false;
+                break;
             } else {
                 holder.addcoin.setImageResource(R.drawable.additem);
                 holder.addcoin.setColorFilter(ContextCompat.getColor(context, R.color.orange));
+                holder.addOrDel = true;
+
             }
         }
 
         holder.addcoin.setOnClickListener(v -> {
-            Log.e("btn" , lst.getID());
-            Log.e("btn" , "btn works "+ lst.getID() );
+
             Gson gson = new Gson();
             CoinsListController coinprefs =  new CoinsListController(lst.getID(),lst.getName(),lst.getSymbol());
             String objString = gson.toJson(coinprefs);
-      //      Log.e("js" , objString);
             if (!coinsJsonList.isEmpty()){
-                Log.e("not empty" , coinsJsonList);
                 jj = gson.fromJson(coinsJsonList, new TypeToken<List<JsonObject>>(){}.getType());
             }
-            try {
-                JSONObject jsonObject = new JSONObject(objString);
-                jj.add(jsonObject);
 
-                SharedPreferences.Editor myEdit = sharedPreferences.edit();
-                myEdit.putString("coins",jj.toString());
-                myEdit.apply();
-                   Log.e("shared" , sharedPreferences.getString("coins", ""));
-                MainActivity.UpdateView();
-                ((coinsListView)context).finish();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+            switch (String.valueOf(holder.addOrDel)){
+                case "false":
+                    try {
+                        JSONObject jsonObject = new JSONObject(objString);
+                        for(int i = 0;i<jj.size();i++){
+                            if(String.valueOf(jj.get(i)).equals(String.valueOf(jsonObject))){
+                            jj.remove(i);
+                        }
+                        }
+                        updateSharedPrefs();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "true":
+                default:
+                    try {
+                        JSONObject jsonObject = new JSONObject(objString);
+                        jj.add(jsonObject);
+                        updateSharedPrefs();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
             }
-
-
         });
     }
 
@@ -108,6 +120,8 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         private final TextView name;
         private final TextView symbol;
         private final ImageView addcoin;
+        public boolean addOrDel;
+
         public ViewHolder(View itemView) {
             super(itemView);
             id = itemView.findViewById(R.id.id);
@@ -115,10 +129,17 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
             symbol = itemView.findViewById(R.id.code);
             addcoin = itemView.findViewById(R.id.addcoin);
             addcoin.setVisibility(View.VISIBLE);
+            addOrDel = false;
         }
     }
 
-    public void checkIfExist(){
+    public void updateSharedPrefs(){
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putString("coins",jj.toString());
+        myEdit.apply();
+        Log.e("shared" , sharedPreferences.getString("coins", ""));
+        MainActivity.UpdateView();
+        ((coinsListView)context).finish();
 
     }
 }
