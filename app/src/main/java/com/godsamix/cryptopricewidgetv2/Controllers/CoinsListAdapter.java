@@ -2,6 +2,8 @@ package com.godsamix.cryptopricewidgetv2.Controllers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.godsamix.cryptopricewidgetv2.MainActivity;
@@ -47,14 +50,15 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         holder.id.setText(lst.getID());
         holder.name.setText(lst.getName());
         holder.symbol.setText(lst.getSymbol());
-        for(int i = 0;i<listID.length;i++){
-            if(lst.getID().equals(listID[i]) ){
-                    Log.e("id" , listID[i]);
-                    holder.addcoin.setVisibility(View.INVISIBLE);
-                  //  Log.e("visibility" , String.valueOf(holder.addcoin.getVisibility()));
-                }else{
-                    holder.addcoin.setVisibility(View.VISIBLE);
-                }
+        for (String s : listID) {
+            if (lst.getID().equals(s)) {
+                Log.e("id", s);
+                holder.addcoin.setImageResource(R.drawable.deleteitem);
+                holder.addcoin.setColorFilter(ContextCompat.getColor(context, R.color.red));
+            } else {
+                holder.addcoin.setImageResource(R.drawable.additem);
+                holder.addcoin.setColorFilter(ContextCompat.getColor(context, R.color.orange));
+            }
         }
 
         holder.addcoin.setOnClickListener(v -> {
@@ -64,8 +68,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
             CoinsListController coinprefs =  new CoinsListController(lst.getID(),lst.getName(),lst.getSymbol());
             String objString = gson.toJson(coinprefs);
       //      Log.e("js" , objString);
-            if (coinsJsonList.isEmpty()){
-            }else{
+            if (!coinsJsonList.isEmpty()){
                 Log.e("not empty" , coinsJsonList);
                 jj = gson.fromJson(coinsJsonList, new TypeToken<List<JsonObject>>(){}.getType());
             }
@@ -111,7 +114,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
             name = itemView.findViewById(R.id.name);
             symbol = itemView.findViewById(R.id.code);
             addcoin = itemView.findViewById(R.id.addcoin);
-           // addcoin.setVisibility(View.VISIBLE);
+            addcoin.setVisibility(View.VISIBLE);
         }
     }
 
