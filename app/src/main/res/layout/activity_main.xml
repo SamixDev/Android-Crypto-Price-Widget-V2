@@ -22,10 +22,14 @@
         android:layout_height="0dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:maxHeight="200dp"
+        app:layout_constrainedHeight="true"
+
+        />
 
     <TextView
         android:id="@+id/footer"
@@ -40,26 +44,29 @@
         android:id="@+id/linearlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerview">
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/additem"
             android:layout_gravity="center"
-            app:tint="@color/orange"/>
+            android:src="@drawable/additem"
+            app:tint="@color/orange" />
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Coin"
-            android:textColor="@color/orange"
             android:layout_gravity="center"
-/>
+            android:text="Add Coin"
+            android:textColor="@color/orange" />
 
 
     </LinearLayout>

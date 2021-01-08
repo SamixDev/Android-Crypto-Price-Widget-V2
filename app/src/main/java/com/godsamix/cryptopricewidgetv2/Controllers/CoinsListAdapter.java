@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.godsamix.cryptopricewidgetv2.MainActivity.canAdd;
 import static com.godsamix.cryptopricewidgetv2.MainActivity.coinsJsonList;
 import static com.godsamix.cryptopricewidgetv2.MainActivity.jsonarray;
 import static com.godsamix.cryptopricewidgetv2.MainActivity.listID;
@@ -76,6 +77,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
                 jj = gson.fromJson(coinsJsonList, new TypeToken<List<JsonObject>>(){}.getType());
             }
 
+
             switch (String.valueOf(holder.addOrDel)){
                 case "false":
                     try {
@@ -92,12 +94,17 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
                     break;
                 case "true":
                 default:
-                    try {
-                        JSONObject jsonObject = new JSONObject(objString);
-                        jj.add(jsonObject);
-                        updateSharedPrefs();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if (canAdd){
+                        try {
+                            JSONObject jsonObject = new JSONObject(objString);
+                            jj.add(jsonObject);
+                            updateSharedPrefs();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        Toast.makeText(context,"Max number of Coins reached",
+                                Toast.LENGTH_SHORT).show();
                     }
             }
         });

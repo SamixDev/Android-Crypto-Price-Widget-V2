@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public static String[] listSymbol;
     public static String[] listID;
     public static JSONArray jsonarray;
+    public static Boolean canAdd = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
         //shared prefs init
         sharedPreferences = this.getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        coinsJsonList = sharedPreferences.getString("coins", "");
+        if (coinsJsonList.isEmpty()){
+            String btcprefs = "[{\"id\":\"bitcoin\",\"symbol\":\"btc\",\"name\":\"Bitcoin\"}]";
+            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+            myEdit.putString("coins",btcprefs);
+            myEdit.apply();
+        }
         la = findViewById(R.id.linearlay);
         recyclerView = findViewById(R.id.recyclerview);
         footer = (TextView) findViewById(R.id.footer);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         //footer
         footer.setText(
@@ -85,8 +94,7 @@ public class MainActivity extends AppCompatActivity {
             String btcprefs = "[{\"id\":\"bitcoin\",\"symbol\":\"btc\",\"name\":\"Bitcoin\"}]";
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
             myEdit.putString("coins",btcprefs);
-            myEdit.commit();
-        }else{
+            myEdit.apply();
         }
         Log.e("shared pref coins" , coinsJsonList);
         try {
@@ -109,10 +117,10 @@ public class MainActivity extends AppCompatActivity {
         }
         adap = new SimpleRVAdapter(listID,listName,listSymbol);
         recyclerView.setAdapter(adap);
-        if(adap.getItemCount() <= 8){
-            la.setVisibility(View.VISIBLE);
+        if(adap.getItemCount() < 8){
+            canAdd = true;
         }else{
-            la.setVisibility(View.GONE);
+            canAdd = false;
         }
     }
 }
