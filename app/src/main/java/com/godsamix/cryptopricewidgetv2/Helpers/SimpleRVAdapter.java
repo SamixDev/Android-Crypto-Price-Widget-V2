@@ -10,16 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.godsamix.cryptopricewidgetv2.R;
+import com.squareup.picasso.Picasso;
 
 public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHolder> {
     private String[] id;
     private String[] name;
     private String[] symbol;
+    private String[] image;
 
-    public SimpleRVAdapter(String[] idArgs, String[] nameArgs, String[] symbolArgs){
+    public SimpleRVAdapter(String[] idArgs, String[] nameArgs, String[] symbolArgs, String[] imageArgs){
         id = idArgs;
         name = nameArgs;
         symbol = symbolArgs;
+        image = imageArgs;
     }
 
     @NonNull
@@ -51,7 +54,8 @@ public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHo
         holder.idtext.setText(id[position]);
         holder.codetext.setText(symbol[position]);
         holder.nametext.setText(name[position]);
-        holder.imgview.setImageResource(R.drawable.additem);
+        Picasso.get().load(image[position]).into(holder.imgview);
+       // holder.imgview.setImageResource(R.drawable.additem);
     }
 
     @Override

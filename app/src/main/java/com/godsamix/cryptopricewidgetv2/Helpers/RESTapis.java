@@ -1,6 +1,9 @@
 package com.godsamix.cryptopricewidgetv2.Helpers;
 
 import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListController;
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -25,11 +28,11 @@ public interface RESTapis {
 
     // Get a Coin data
     @GET("coins/{id}")
-    Call<Object> getCoinData(@Path("id") String id,
-                             @Query("tickers") String tickers,
-                             @Query("community_data") String community_data,
-                             @Query("market_data") String market_data,
-                             @Query("developer_data") String developer_data,
-                             @Query("sparkline") String sparkline);
+    Call<JsonObject> getCoinData(@Path("id") String id,
+                                 @Query("tickers") String tickers,
+                                 @Query("community_data") String community_data,
+                                 @Query("market_data") String market_data,
+                                 @Query("developer_data") String developer_data,
+                                 @Query("sparkline") String sparkline);
 
 }

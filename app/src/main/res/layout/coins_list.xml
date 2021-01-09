@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp"
+    android:padding="2dp"
     android:layout_marginRight="12sp"
     android:layout_marginLeft="12sp"
-    android:layout_marginBottom="12sp"
+    android:layout_marginBottom="5sp"
     >
 
     <ImageView

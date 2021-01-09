@@ -1,40 +1,32 @@
 package com.godsamix.cryptopricewidgetv2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListController;
+import com.godsamix.cryptopricewidgetv2.Helpers.RESTapis;
+import com.godsamix.cryptopricewidgetv2.Helpers.RetrofitService;
 import com.godsamix.cryptopricewidgetv2.Helpers.SimpleRVAdapter;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static String[] listName;
     public static String[] listSymbol;
     public static String[] listID;
+    public static String[] listImage;
     public static JSONArray jsonarray;
     public static Boolean canAdd = true;
 
@@ -103,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             listName = new String[arrLength];
             listSymbol = new String[arrLength];
             listID = new String[arrLength];
+            listImage = new String[arrLength];
             for (int i = 0; i < arrLength; i++) {
                 JSONObject jsonobject = jsonarray.getJSONObject(i);
                 String name = jsonobject.getString("name");
@@ -111,16 +105,49 @@ public class MainActivity extends AppCompatActivity {
                 listName[i] = name;
                 listSymbol[i] = symbol;
                 listID[i] = id;
+            //    Log.e("img ", getCoinsImage(id));
+                getCoinsImage(id);
+             //   listImage[i] = listIDone;
+
+             //   
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adap = new SimpleRVAdapter(listID,listName,listSymbol);
+        adap = new SimpleRVAdapter(listID,listName,listSymbol,listImage);
         recyclerView.setAdapter(adap);
         if(adap.getItemCount() < 8){
             canAdd = true;
         }else{
             canAdd = false;
         }
+    }
+
+    private static void getCoinsImage(String id){
+        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
+        Call<JsonObject> call;
+        call = RESTapis.getCoinData(id, "false", "false", "false", "false", "false" );
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                if(response.isSuccessful()) {
+                    try {
+                        JSONObject jo = new JSONObject(response.body().get("image").toString());
+                        Log.e("json2 ", jo.get("small").toString());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }else{
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                Log.e("failed ", t.getMessage());
+            }
+        });
+      //  Log.e("img 2 ", img[0]);
+       // return ;
     }
 }
