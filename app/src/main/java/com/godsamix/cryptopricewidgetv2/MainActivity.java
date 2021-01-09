@@ -66,11 +66,11 @@ public class MainActivity extends AppCompatActivity {
             myEdit.putString("coins",btcprefs);
             myEdit.apply();
         }
+
         la = findViewById(R.id.linearlay);
         recyclerView = findViewById(R.id.recyclerview);
         footer = (TextView) findViewById(R.id.footer);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         //footer
         footer.setText(

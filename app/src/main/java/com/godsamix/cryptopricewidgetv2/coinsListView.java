@@ -88,7 +88,6 @@ public class coinsListView extends AppCompatActivity {
             }
             @Override
             public void onFailure(@NonNull Call<List<CoinsListController>> call, @NonNull Throwable t) {
-                //   Log.e(TAG, t.getMessage());
                 Log.e("failed ", t.getMessage());
             }
         });

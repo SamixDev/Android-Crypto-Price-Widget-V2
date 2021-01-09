@@ -18,7 +18,6 @@ public class CoinsListController {
     }
 
     public CoinsListController() {
-
     }
 
     public String getID() {
@@ -32,15 +31,5 @@ public class CoinsListController {
     public String getSymbol() {
         return symbol;
     }
-
-//    @Override
-//    public String toString() {
-//        return "CoinsListController{" +
-//                "id='" + id + '\'' +
-//                ", name='" + name + '\'' +
-//                ", symbol='" + symbol + '\'' +
-//                '}';
-//    }
-
 }
 

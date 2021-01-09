@@ -69,14 +69,12 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         }
 
         holder.addcoin.setOnClickListener(v -> {
-
             Gson gson = new Gson();
             CoinsListController coinprefs =  new CoinsListController(lst.getID(),lst.getName(),lst.getSymbol());
             String objString = gson.toJson(coinprefs);
             if (!coinsJsonList.isEmpty()){
                 jj = gson.fromJson(coinsJsonList, new TypeToken<List<JsonObject>>(){}.getType());
             }
-
 
             switch (String.valueOf(holder.addOrDel)){
                 case "false":
@@ -144,9 +142,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putString("coins",jj.toString());
         myEdit.apply();
-        Log.e("shared" , sharedPreferences.getString("coins", ""));
         MainActivity.UpdateView();
         ((coinsListView)context).finish();
-
     }
 }
