@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +25,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public static String[] listName;
     public static String[] listSymbol;
     public static String[] listID;
-    public static String[] listImage;
     public static JSONArray jsonarray;
     public static Boolean canAdd = true;
 
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         UpdateView();
+     //   Log.e("arrlist" , listImage.toString());
     }
 
     public static void UpdateView(){
@@ -96,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             listName = new String[arrLength];
             listSymbol = new String[arrLength];
             listID = new String[arrLength];
-            listImage = new String[arrLength];
+           // listImage = new String[arrLength];
             for (int i = 0; i < arrLength; i++) {
                 JSONObject jsonobject = jsonarray.getJSONObject(i);
                 String name = jsonobject.getString("name");
@@ -105,49 +109,17 @@ public class MainActivity extends AppCompatActivity {
                 listName[i] = name;
                 listSymbol[i] = symbol;
                 listID[i] = id;
-            //    Log.e("img ", getCoinsImage(id));
-                getCoinsImage(id);
-             //   listImage[i] = listIDone;
 
-             //   
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adap = new SimpleRVAdapter(listID,listName,listSymbol,listImage);
+        adap = new SimpleRVAdapter(listID,listName,listSymbol);
         recyclerView.setAdapter(adap);
         if(adap.getItemCount() < 8){
             canAdd = true;
         }else{
             canAdd = false;
         }
-    }
-
-    private static void getCoinsImage(String id){
-        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
-        Call<JsonObject> call;
-        call = RESTapis.getCoinData(id, "false", "false", "false", "false", "false" );
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                if(response.isSuccessful()) {
-                    try {
-                        JSONObject jo = new JSONObject(response.body().get("image").toString());
-                        Log.e("json2 ", jo.get("small").toString());
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }else{
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Log.e("failed ", t.getMessage());
-            }
-        });
-      //  Log.e("img 2 ", img[0]);
-       // return ;
     }
 }

@@ -1,5 +1,12 @@
 package com.godsamix.cryptopricewidgetv2.Helpers;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +17,33 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.godsamix.cryptopricewidgetv2.R;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHolder> {
     private String[] id;
     private String[] name;
     private String[] symbol;
-    private String[] image;
 
-    public SimpleRVAdapter(String[] idArgs, String[] nameArgs, String[] symbolArgs, String[] imageArgs){
+    public SimpleRVAdapter(String[] idArgs, String[] nameArgs, String[] symbolArgs){
         id = idArgs;
         name = nameArgs;
         symbol = symbolArgs;
-        image = imageArgs;
     }
 
     @NonNull
@@ -54,8 +75,35 @@ public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHo
         holder.idtext.setText(id[position]);
         holder.codetext.setText(symbol[position]);
         holder.nametext.setText(name[position]);
-        Picasso.get().load(image[position]).into(holder.imgview);
-       // holder.imgview.setImageResource(R.drawable.additem);
+
+
+
+        RESTapis RESTapis = RetrofitService.createService(RESTapis.class);
+        Call<JsonObject> call;
+        call = RESTapis.getCoinData(id[position], "false", "false", "false", "false", "false" );
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                if(response.isSuccessful()) {
+                    try {
+                        JSONObject jo = new JSONObject(response.body().get("image").toString());
+                        Picasso mPicasso = Picasso.get();
+                        mPicasso.setIndicatorsEnabled(true);
+                        mPicasso.load(jo.get("small").toString()).into(holder.imgview);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }else{
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                Log.e("failed ", t.getMessage());
+            }
+        });
+
     }
 
     @Override

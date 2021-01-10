@@ -20,6 +20,10 @@ import com.godsamix.cryptopricewidgetv2.Controllers.CoinsListController;
 import com.godsamix.cryptopricewidgetv2.Helpers.RESTapis;
 import com.godsamix.cryptopricewidgetv2.Helpers.RetrofitService;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +38,6 @@ public class coinsListView extends AppCompatActivity {
     private CoinsListAdapter hardAdapter;
     private RecyclerView recyclerView;
     private ProgressBar spinner;
-    private ImageView searchBtn;
-    private ImageView backBtn;
     private TextInputEditText searchTxt;
 
     @Override
@@ -47,12 +49,12 @@ public class coinsListView extends AppCompatActivity {
         hardAdapter = new CoinsListAdapter(this, viewlist);
         recyclerView = findViewById(R.id.recyclerview);
 
-        backBtn = findViewById(R.id.back);
+        ImageView backBtn = findViewById(R.id.back);
         backBtn.setOnClickListener(v -> {
             finish();
         });
 
-        searchBtn = findViewById(R.id.searchbutton);
+        ImageView searchBtn = findViewById(R.id.searchbutton);
         searchTxt = findViewById(R.id.searchinput);
         searchBtn.setOnClickListener(v -> {
             spinner.setVisibility(View.VISIBLE);
@@ -78,7 +80,6 @@ public class coinsListView extends AppCompatActivity {
                             }
                         }
                     }
-                }else{
                 }
                 spinner.setVisibility(View.GONE);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());

@@ -70,7 +70,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
 
         holder.addcoin.setOnClickListener(v -> {
             Gson gson = new Gson();
-            CoinsListController coinprefs =  new CoinsListController(lst.getID(),lst.getName(),lst.getSymbol());
+            CoinsListController coinprefs =  new CoinsListController(lst.getID(),lst.getName(),lst.getSymbol(),lst.getImg());
             String objString = gson.toJson(coinprefs);
             if (!coinsJsonList.isEmpty()){
                 jj = gson.fromJson(coinsJsonList, new TypeToken<List<JsonObject>>(){}.getType());
