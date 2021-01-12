@@ -6,11 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.godsamix.cryptopricewidgetv2.Helpers.SimpleRVAdapter;
 import com.godsamix.cryptopricewidgetv2.Helpers.widgetCoinsAdapter;
 
@@ -30,6 +36,7 @@ public class CryptoPrice extends AppWidgetProvider {
     public static String[] listName;
     public static String[] listSymbol;
     public static String[] listID;
+    public static String[] listPrice;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
