@@ -13,8 +13,8 @@ public class CoinsListController {
     private  String symbol;
 
 
-
-    private  String img;
+    @SerializedName("img")
+    private  String img="";
 
     public CoinsListController(String id, String name, String symbol, String img) {
         this.id = id;

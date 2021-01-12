@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("MySharedPref", MODE_PRIVATE);
         coinsJsonList = sharedPreferences.getString("coins", "");
         if (coinsJsonList.isEmpty()){
-            String btcprefs = "[{\"id\":\"bitcoin\",\"symbol\":\"btc\",\"name\":\"Bitcoin\"}]";
+            String btcprefs = "[{\"id\":\"bitcoin\",\"symbol\":\"btc\",\"name\":\"Bitcoin\",\"img\":\"\"}]";
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
             myEdit.putString("coins",btcprefs);
             myEdit.apply();
@@ -82,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         UpdateView();
-     //   Log.e("arrlist" , listImage.toString());
+
     }
 
     public static void UpdateView(){
         coinsJsonList = sharedPreferences.getString("coins", "");
         if (coinsJsonList.isEmpty()){
-            String btcprefs = "[{\"id\":\"bitcoin\",\"symbol\":\"btc\",\"name\":\"Bitcoin\"}]";
+            String btcprefs = "[{\"id\":\"bitcoin\",\"symbol\":\"btc\",\"name\":\"Bitcoin\",\"img\":\"\"}]";
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
             myEdit.putString("coins",btcprefs);
             myEdit.apply();
@@ -109,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
                 listName[i] = name;
                 listSymbol[i] = symbol;
                 listID[i] = id;
+                if(jsonobject.getString("img").isEmpty()){
+
+                }
 
             }
         } catch (JSONException e) {

@@ -75,7 +75,7 @@ public class coinsListView extends AppCompatActivity {
                         if (search.isEmpty()){
                             viewlist.add(procc);
                         }else{
-                            if(procc.getName().equals(search)){
+                            if(procc.getName().toLowerCase().equals(search.toLowerCase())){
                                 viewlist.add(procc);
                             }
                         }

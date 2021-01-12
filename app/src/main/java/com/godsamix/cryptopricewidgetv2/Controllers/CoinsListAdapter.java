@@ -105,7 +105,9 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.View
                                 Toast.LENGTH_SHORT).show();
                     }
             }
+
         });
+
     }
 
     @NonNull

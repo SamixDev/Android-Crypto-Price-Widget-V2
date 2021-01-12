@@ -88,7 +88,7 @@ public class SimpleRVAdapter extends RecyclerView.Adapter<SimpleRVAdapter.ViewHo
                     try {
                         JSONObject jo = new JSONObject(response.body().get("image").toString());
                         Picasso mPicasso = Picasso.get();
-                        mPicasso.setIndicatorsEnabled(true);
+                      //  mPicasso.setIndicatorsEnabled(true);
                         mPicasso.load(jo.get("small").toString()).into(holder.imgview);
 
                     } catch (JSONException e) {
